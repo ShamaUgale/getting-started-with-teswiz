@@ -20,8 +20,8 @@ public class ProductDetailsBL {
         softly = Runner.getSoftAssertion(threadId);
     }
 
-    public ProductDetailsBL addTheProductToCart() {
-        assertThat(ProductScreen.get().addProductToCart().trim().equalsIgnoreCase("added to cart"));
+    public ProductDetailsBL userAddsProductIntoCart() {
+        assertThat(ProductScreen.get().addProductToCart().trim()).isEqualToIgnoringCase("added to cart");
         context.addTestState("PRODUCT_QUANTITY", 1);
         context.addTestState("TOTAL_ITEMS_IN_CART", 1);
         LOGGER.info("product added to cart successfully");

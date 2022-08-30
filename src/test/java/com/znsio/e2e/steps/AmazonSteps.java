@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 
 public class AmazonSteps {
 
-    private static final Logger LOGGER = Logger.getLogger(CalculatorSteps.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AmazonSteps.class.getName());
     private final TestExecutionContext context;
     private final Drivers allDrivers;
 
@@ -28,29 +28,25 @@ public class AmazonSteps {
         LOGGER.info("allDrivers: " + (null == allDrivers));
     }
 
-    @Given("Guest user is on amazon home screen")
-    public void guestUserIsOnAmazonHomeScreen() {
+    @Given("user searches for {string} product on amazon home page")
+    public void userSearchesForProductOnAmazonHomePage(String product) {
         LOGGER.info("launch website as a guest user");
         allDrivers.createDriverFor(GUEST_USER_CONTEXT.GUEST_USER, Runner.platform, context);
+        new AmazonBL().userSearchesForProductOnAmazonHomePage(product);
     }
 
-    @When("user searches for {string}")
-    public void userSearchesFor(String product) {
-        new AmazonBL().searchForProduct(product);
+    @When("user selects first product from search results")
+    public void userSelectsFirstProductFromSearchResults() {
+        new AmazonBL().userSelectsFirstProductFromSearchResults();
     }
 
-    @And("opens the product details page")
-    public void opensTheProductDetailsPage() {
-        new AmazonBL().openTheProductDetailsPage();
+    @And("user adds product into cart")
+    public void userAddsProductIntoCart() {
+        new ProductDetailsBL().userAddsProductIntoCart();
     }
 
-    @And("Adds the product to cart")
-    public void addsTheProductToCart() {
-        new ProductDetailsBL().addTheProductToCart();
-    }
-
-    @Then("User should see the product in the cart")
-    public void userShouldSeeTheProductInTheCart() {
-        new CartBL().productShouldBeAvailableInTheCart();
+    @Then("added product should be visible into the cart")
+    public void addedProductShouldBeVisibleIntoTheCart() {
+        new CartBL().productShouldBeVisibleInTheCart();
     }
 }

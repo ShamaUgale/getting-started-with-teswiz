@@ -22,7 +22,7 @@ public class CartBL {
         softly = Runner.getSoftAssertion(threadId);
     }
 
-    public CartBL productShouldBeAvailableInTheCart() {
+    public CartBL productShouldBeVisibleInTheCart() {
         LOGGER.info("navigating to cart page");
         ProductScreen.get().goToCart();
         LOGGER.info("checking the total count of items in the cart");

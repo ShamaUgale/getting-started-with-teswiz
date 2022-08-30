@@ -21,7 +21,7 @@ public class AmazonBL {
         softly = Runner.getSoftAssertion(threadId);
     }
 
-    public AmazonBL searchForProduct(String productName) {
+    public AmazonBL userSearchesForProductOnAmazonHomePage(String productName) {
         context.addTestState("PRODUCT_NAME", productName);
         for (String searchResult : AmazonHomeScreen.get().searchProduct(productName)) {
             LOGGER.info("comparing the search results" + searchResult + "with the searched product : " + productName);
@@ -31,12 +31,12 @@ public class AmazonBL {
         return this;
     }
 
-    public AmazonBL openTheProductDetailsPage() {
+    public AmazonBL userSelectsFirstProductFromSearchResults() {
         String newProductTab = AmazonHomeScreen.get().getProductDetails();
         assertThat(newProductTab).isNotEmpty();
         String[] url = newProductTab.split("\\?");
-        assertThat(url[0].replaceAll("-"," ")
-                .contains(context.getTestState("PRODUCT_NAME").toString()));
+        assertThat(url[0].replaceAll("-"," "))
+                .containsIgnoringCase(context.getTestState("PRODUCT_NAME").toString());
         LOGGER.info("on the product page");
         return this;
     }
